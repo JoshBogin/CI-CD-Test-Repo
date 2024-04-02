@@ -22,9 +22,9 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import com.example.test_ci_cd.ui.theme.TestCICDTheme
 
-class MainActivity(
-    private val viewModel: MainViewModel
-) : ComponentActivity() {
+class MainActivity : ComponentActivity() {
+    private val viewModel: MainViewModel = MainViewModel()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {

@@ -1,10 +1,7 @@
 package com.example.test_ci_cd
 
-import androidx.compose.runtime.Composable
-import androidx.lifecycle.SavedStateHandle
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
 
 /**
  * Example local unit test, which will execute on the development machine (host).

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="KtLint plugin">
+    <ktlintMode>DISTRACT_FREE</ktlintMode>
+    <!-- set the linter to android styling -->
+    <androidStyle>true</androidStyle>
+<!--    <disabledRules>-->
+<!--      <option value="function-naming"/>-->
+<!--    </disabledRules>-->
+  </component>
+</project>

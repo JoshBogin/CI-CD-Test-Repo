@@ -1,4 +1,4 @@
-package com.example.test_ci_cd
+package com.example.testCICD
 
 import androidx.lifecycle.ViewModel
 

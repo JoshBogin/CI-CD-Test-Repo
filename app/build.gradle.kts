@@ -1,14 +1,18 @@
+import org.jlleitschuh.gradle.ktlint.KtlintExtension
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.ktlint)
 }
 
 android {
-    namespace = "com.example.test_ci_cd"
+    namespace = "com.example.testCICD"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.test_ci_cd"
+        applicationId = "com.example.testCICD"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -25,7 +29,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -46,6 +50,14 @@ android {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
+    }
+}
+configure<KtlintExtension> {
+    android.set(true) // to use the Android Studio KtLint plugin style
+    ignoreFailures.set(false)
+    reporters {
+        reporter(ReporterType.PLAIN) // reports to the console
+        reporter(ReporterType.CHECKSTYLE)
     }
 }
 

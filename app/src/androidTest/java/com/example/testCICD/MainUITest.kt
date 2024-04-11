@@ -1,4 +1,4 @@
-package com.example.test_ci_cd
+package com.example.testCICD
 
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
@@ -17,7 +17,6 @@ import org.junit.runner.RunWith
  */
 @RunWith(AndroidJUnit4::class)
 class MainUITest {
-
     @get:Rule
     val rule = createAndroidComposeRule<MainActivity>()
 
@@ -25,7 +24,7 @@ class MainUITest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.example.test_ci_cd", appContext.packageName)
+        assertEquals("com.example.testCICD", appContext.packageName)
     }
 
     @Test

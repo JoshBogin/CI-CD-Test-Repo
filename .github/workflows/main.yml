@@ -4,7 +4,7 @@ on: [ push, pull_request, workflow_dispatch ]
 
 jobs:
   build:
-    name: Lint code base
+    name: Upload Artifact
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

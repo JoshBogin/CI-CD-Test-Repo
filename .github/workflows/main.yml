@@ -1,4 +1,4 @@
-name: Test Pipeline
+name: Main PR Pipeline
 
 on: [ push, pull_request, workflow_dispatch ]
 

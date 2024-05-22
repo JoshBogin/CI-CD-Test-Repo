@@ -16,11 +16,17 @@ jobs:
           java-version: 17
           distribution: temurin
 
+      - name: Grant execute permissions for gradlew
+        run: chmod +x gradlew
+
       - name: Lint with Detekt
         run: ./gradlew detekt
 
       - name: Build with Gradle
-        run: ./gradlew buildDebug
+        run: ./gradlew buildDebug 
+        
+      - name: Assemble APK
+        run: ./gradlew app:assembleDebug
 
       - name: List APK files
         run: ls -R app/build/outputs/apk/

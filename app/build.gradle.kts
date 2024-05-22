@@ -1,10 +1,7 @@
-import org.jlleitschuh.gradle.ktlint.KtlintExtension
-import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
-
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-    alias(libs.plugins.ktlint)
+    alias(libs.plugins.detekt)
 }
 
 android {
@@ -52,17 +49,8 @@ android {
         }
     }
 }
-configure<KtlintExtension> {
-    android.set(true) // to use the Android Studio KtLint plugin style
-    ignoreFailures.set(false)
-    reporters {
-        reporter(ReporterType.PLAIN) // reports to the console
-        reporter(ReporterType.CHECKSTYLE)
-    }
-}
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

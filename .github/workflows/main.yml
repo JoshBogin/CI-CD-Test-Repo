@@ -1,9 +1,12 @@
 name: Test Pipeline
 
-on: push
-
+on:
+  push:
+    branches: [ $defualt-branch ]
+  pull_request:
+    branches: [ $defualt-branch ]
 jobs:
-  super-lint:
+  lint:
     name: Lint code base
     runs-on: ubuntu-latest
     steps:
@@ -15,5 +18,9 @@ jobs:
         env:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      # - name: Run Super-Linter
-      #   uses: github/super-linter@v4
+  build:
+    name: Build code base
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build with Gradle
+        run: ./gradlew build

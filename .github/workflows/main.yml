@@ -3,21 +3,18 @@ name: Test Pipeline
 on: [ push, pull_request ]
 
 jobs:
-  lint:
+  build:
     name: Lint code base
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java JDK
+        uses: actions/setup-java@v3.13.0
 
       - name: Lint with Detekt
         run: ./gradlew detekt
-        env:
-          DEFAULT_BRANCH: main
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  build:
-    name: Build code base
-    runs-on: ubuntu-latest
-    steps:
+        
       - name: Build with Gradle
         run: ./gradlew build

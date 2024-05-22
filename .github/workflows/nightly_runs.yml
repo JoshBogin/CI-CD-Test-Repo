@@ -1,4 +1,4 @@
-name: Run Gradle on every push
+name: Nightly UI Tests
 
 on:
   schedule:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: Upload Artifact
+    name: UI Teets
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

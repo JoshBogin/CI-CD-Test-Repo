@@ -34,7 +34,7 @@ class MainUITest {
 
     @Test
     fun useAppContext() {
-        assertEquals("com.example.testCICD", appContext.packageName)
+        assertEquals("com.joshbogin.testCICD", appContext.packageName)
     }
 
     @Test

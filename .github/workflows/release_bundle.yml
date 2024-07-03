@@ -26,15 +26,6 @@ jobs:
         id: buildRelease
         run: ./gradlew bundleRelease
 
-      - if: ${{ env.signing_key == '' }}
-        run: echo 'Empty Signing Key'
-      - if: ${{ env.alias == '' }}
-        run: echo 'Empty Alias'
-      - if: ${{ env.store_pass == '' }}
-        run: echo 'Empty Store Pass'
-      - if: ${{ env.key_pass == '' }}
-        run: echo 'Empty Key Pass'
-
       - if: ${{ env.signing_key != '' }}
         run: echo 'Check 1'
       - if: ${{ env.alias != '' }}
@@ -60,5 +51,5 @@ jobs:
           serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
           packageName: com.joshbogin.testCICD
           releaseFiles: ${{ steps.sign_app.outputs.signedReleaseFile }}
-          track: qa
+          track: internal
       

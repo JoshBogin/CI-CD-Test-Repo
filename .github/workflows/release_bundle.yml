@@ -6,6 +6,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      signing_key: ${{ secrets.SIGNING_KEY }}
+      alias: ${{ secrets.SIGNING_KEY_ALIAS }}
+      store_pass: ${{ secrets.SIGNING_STORE_PASSWORD }}
+      key_pass: ${{ secrets.SIGNING_KEY_PASSWORD }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -21,15 +26,33 @@ jobs:
         id: buildRelease
         run: ./gradlew bundleRelease
 
+      - if: ${{ env.signing_key == '' }}
+        run: echo 'Empty Signing Key'
+      - if: ${{ env.alias == '' }}
+        run: echo 'Empty Alias'
+      - if: ${{ env.store_pass == '' }}
+        run: echo 'Empty Store Pass'
+      - if: ${{ env.key_pass == '' }}
+        run: echo 'Empty Key Pass'
+
+      - if: ${{ env.signing_key != '' }}
+        run: echo 'Check 1'
+      - if: ${{ env.alias != '' }}
+        run: echo 'Check 2'
+      - if: ${{ env.store_pass != '' }}
+        run: echo 'Check 3'
+      - if: ${{ env.key_pass != '' }}
+        run: echo 'Check 4'
+
       - name: Sign AAB
         id: sign_app
         uses: r0adkll/sign-android-release@v1
         with:
           releaseDirectory: app/build/outputs/bundle/release
-          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
-          alias: ${{ secrets.SIGNING_KEY_ALIAS }}
-          keyStorePassword: ${{ secrets.SIGNING_STORE_PASSWORD }}
-          keyPassword: ${{ secrets.SIGNING_KEY_PASSWORD }}
+          signingKeyBase64: ${{ env.signing_key }}
+          alias: ${{ env.alias }}
+          keyStorePassword: ${{ env.store_pass }}
+          keyPassword: ${{ env.key_pass }}
 
       - name: Upload Bundle to Play Store
         uses: r0adkll/upload-google-play@v1

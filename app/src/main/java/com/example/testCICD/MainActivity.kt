@@ -155,34 +155,6 @@ fun Greeting(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun SheetContent(
-    greeting: String,
-    targetValue: SheetValue,
-    modifier: Modifier = Modifier,
-) {
-    Column {
-        for(i in 0..100) {
-            Text(
-                text = when(targetValue) {
-                    SheetValue.Hidden -> "Hidden"
-                    SheetValue.Expanded -> "expanded"
-                    SheetValue.PartiallyExpanded -> "partial"
-                    else -> "else"
-                },
-                fontSize = when(targetValue) {
-                    SheetValue.Hidden -> 0.sp
-                    SheetValue.Expanded -> 32.sp
-                    SheetValue.PartiallyExpanded -> 24.sp
-                    else -> 12.sp
-                },
-                modifier = modifier
-            )
-        }
-    }
-}
-
 @Suppress("ktlint:standard:function-naming")
 @Preview(showBackground = true)
 @Composable

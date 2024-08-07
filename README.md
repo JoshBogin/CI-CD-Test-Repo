@@ -6,8 +6,10 @@ This repository is a plaground used to learn how to implement a CI/DC pipeline t
 I created a hello world app that includes simple unit tests and UI tests that will be utilized by the pipeline workflows.
 
 ## Building the Project
-- **Download** Android Studio if you don't already have it and **clone** the repository
-   - `git clone git@github.com:JoshBogin/CI-CD-Test-Repo.git`
+**Download** Android Studio if you don't already have it and **clone** the repository
+- `git clone git@github.com:JoshBogin/CI-CD-Test-Repo.git`
+
+Then, you can build and run the app on an emulator or physical device
 
 ## PR Workflow
 The pr workflow accomplishes a few different tasks. It builds the repository and runs the detekt linter on it, it runs the unit tests, and creates a debug apk of the app.

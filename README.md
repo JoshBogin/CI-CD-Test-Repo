@@ -1,9 +1,20 @@
 # CI-CD-Test-Repo
 
-In this repository, I will be creating a basic project and implementing a CI/DC pipeline in order to run scans and tests on the project!
+## Background
+This repository is a plaground used to learn how to implement a CI/DC pipeline that runs scans and tests on a project in Github Actions!
 
-This project will include simple unit tests and have them run on each PR merge or branch merge
-- If one or more tests fail, the build will fail and it will send a notification
+I created a hello world app that includes simple unit tests and UI tests that will be utilized by the pipeline workflows.
 
-It will also have UI tests and they will run nightly
-- Send notification on failure
+## PR Workflow
+The pr workflow accomplishes a few different tasks. It builds the repository and runs the detekt linter on it, it runs the unit tests, and creates a debug apk of the app.
+- If any one of these steps fail, the workflow will fail and it will send an email notification of this
+
+## Nightly Action
+The nightly flow simply builds and runs the UI test suite
+- This will also send a notification on failure
+
+## Upload to Playstore
+Lastly, I have created a workflow to build a signed app bundle and upload it to the Google Playstore!
+
+TODO add steps for uploading to store
+- should just be to launch workflow...?

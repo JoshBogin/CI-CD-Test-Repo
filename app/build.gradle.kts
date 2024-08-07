@@ -21,18 +21,8 @@ android {
         }
     }
 
-    signingConfigs {
-        create("release") {
-            keyAlias = "helloworld"
-            keyPassword = "Jj4f0ur5f1V368!"
-            storeFile = file("/Users/joshbogin/Documents/hello_world")
-            storePassword = "Jj4f0ur5f1V368!"
-        }
-    }
-
     buildTypes {
         release {
-            signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -70,6 +60,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.integrity)
+    implementation(libs.flexible.bottomsheet.material3)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -1,10 +1,10 @@
-name: Test Pipeline
+name: Main PR Pipeline
 
 on: [ push, pull_request, workflow_dispatch ]
 
 jobs:
   build:
-    name: Lint code base
+    name: Upload Artifact
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -23,13 +23,13 @@ jobs:
         run: ./gradlew detekt
 
       - name: Build with Gradle
-        run: ./gradlew buildDebug 
+        run: ./gradlew buildDebug
+
+      - name: Run Unit Tests
+        run: ./gradlew app:testDebugUnitTest
         
       - name: Assemble APK
         run: ./gradlew app:assembleDebug
-
-      - name: List APK files
-        run: ls -R app/build/outputs/apk/
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v3

@@ -1,4 +1,4 @@
-name: Create & Release Staging Bundle to PlayStore
+name: Create & Release Bundle to PlayStore
 
 on:
   workflow_dispatch: # Allows the workflow to be triggered manually

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -28,18 +29,23 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.testCICD.ui.theme.TestCICDTheme
 import com.skydoves.flexible.bottomsheet.material3.FlexibleBottomSheet
 import com.skydoves.flexible.core.FlexibleSheetSize
+import com.skydoves.flexible.core.FlexibleSheetState
 import com.skydoves.flexible.core.FlexibleSheetValue
 import com.skydoves.flexible.core.rememberFlexibleBottomSheetState
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     private val viewModel: MainViewModel = MainViewModel()
+    var cardHeight = 100
 
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -48,8 +54,7 @@ class MainActivity : ComponentActivity() {
                 val scope = rememberCoroutineScope()
                 val configurationHeight = LocalConfiguration.current.screenHeightDp
                 val density = LocalDensity.current
-                var cardHeight by remember { mutableStateOf(100.dp) }
-                val minimalCardHeightRatio = cardHeight.value / configurationHeight.dp.value
+                val minimalCardHeightRatio = cardHeight / configurationHeight.dp.value
 
                 val sheetState = rememberFlexibleBottomSheetState(
                     flexibleSheetSize = FlexibleSheetSize(
@@ -75,57 +80,66 @@ class MainActivity : ComponentActivity() {
                     )
                 }
 
-                FlexibleBottomSheet(
-                    sheetState = sheetState,
-                    containerColor = Color.Black,
-                    onDismissRequest = { scope.launch { sheetState.hide() } },
+                BottomSheet(sheetState, scope, density)
+            }
+        }
+    }
+
+    @Composable
+    private fun BottomSheet(
+        sheetState: FlexibleSheetState,
+        scope: CoroutineScope,
+        density: Density
+    ) {
+        FlexibleBottomSheet(
+            sheetState = sheetState,
+            containerColor = Color.Black,
+            onDismissRequest = { scope.launch { sheetState.hide() } },
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .onGloballyPositioned {
+                        cardHeight = with(density) { it.size.height.toDp().value.toInt() }
+                    },
+            ) {
+                Button(
+                    onClick = {
+                        scope.launch {
+                            when (sheetState.swipeableState.currentValue) {
+                                FlexibleSheetValue.SlightlyExpanded -> sheetState.intermediatelyExpand()
+                                FlexibleSheetValue.IntermediatelyExpanded -> sheetState.fullyExpand()
+                                else -> sheetState.hide()
+                            }
+                        }
+                    },
                 ) {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier
-                            .align(Alignment.CenterHorizontally)
-                            .onGloballyPositioned {
-                                cardHeight = with(density) { it.size.height.toDp() }
-                        },
-                    ) {
-                        Button(
-                            onClick = {
-                                scope.launch {
-                                    when (sheetState.swipeableState.currentValue) {
-                                        FlexibleSheetValue.SlightlyExpanded -> sheetState.intermediatelyExpand()
-                                        FlexibleSheetValue.IntermediatelyExpanded -> sheetState.fullyExpand()
-                                        else -> sheetState.hide()
-                                    }
-                                }
-                            },
-                        ) {
-                            Text(text = "Expand Or Hide")
+                    Text(text = "Expand Or Hide")
+                }
+
+                var count by remember { mutableStateOf(0) }
+                this@Column.AnimatedVisibility(
+                    visible = sheetState.swipeableState.targetValue == FlexibleSheetValue.IntermediatelyExpanded
+                            || sheetState.swipeableState.targetValue == FlexibleSheetValue.FullyExpanded,
+                ) {
+                    Column {
+                        repeat(count) {
+                            Text(
+                                text = "Hello, World!",
+                                fontSize = 24.sp,
+                                color = Color.White,
+                                modifier = Modifier
+                                    .padding(vertical = 16.dp)
+                            )
                         }
 
-                        var count by remember { mutableStateOf(0) }
-                        this@Column.AnimatedVisibility(
-                            visible = sheetState.swipeableState.targetValue == FlexibleSheetValue.IntermediatelyExpanded
-                            || sheetState.swipeableState.targetValue == FlexibleSheetValue.FullyExpanded,
+                        Button(
+                            onClick = {
+                                count += 1
+                            },
                         ) {
-                            Column {
-                                for(i in 0..count) {
-                                    Text(
-                                        text = "Hello, World!",
-                                        fontSize = 24.sp,
-                                        color = Color.White,
-                                        modifier = Modifier
-                                            .padding(vertical = 16.dp)
-                                    )
-                                }
-
-                                Button(
-                                    onClick = {
-                                        count += 1
-                                    },
-                                ) {
-                                    Text(text = "Add More Text")
-                                }
-                            }
+                            Text(text = "Add More Text")
                         }
                     }
                 }

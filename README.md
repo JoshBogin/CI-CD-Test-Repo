@@ -24,3 +24,4 @@ Lastly, I have created a workflow to build a signed app bundle and upload it to 
 - To execute this, go to the **Actions** tab
 - Click on `Create & Release Bundle to PlayStore` workflow
 - Select the `Run Workflow` dropdown and then click `Run Workflow` again in the menu
+- This creates a `beta` listing of the app in the store which can then be reviewed and published on the google play console
